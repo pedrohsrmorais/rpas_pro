@@ -1,6 +1,6 @@
 # ============================================================
 # Requirements — RPAs eCAC Unificados
-# Python 3.10+  |  Windows 10/11
+# Python 3.10+  |  Windows 10/11 / Linux
 # ============================================================
 
 # ── Automação de interface (PyAutoGUI) ──────────────────────
@@ -8,15 +8,27 @@ pyautogui>=0.9.54           # cliques, digitação, reconhecimento de imagem
 Pillow>=10.4.0              # dependência do PyAutoGUI (screenshots / imagens)
 
 # ── Automação de navegador (Playwright via CDP) ─────────────
-playwright>=1.45.1          # controla Edge/Chrome via CDP
+playwright>=1.45.1          # controla Chrome/Edge via CDP
+
+# ── HTTP / Captcha API ──────────────────────────────────────
+requests>=2.32.0            # chamadas à API de captcha
+urllib3>=2.0.0              # dependência do requests
+
+# ── Clipboard ───────────────────────────────────────────────
+pyperclip>=1.8.2            # copiar/colar texto (usado no login_ecac.py)
 
 # ── Utilitários Windows (ignorado automaticamente no Linux) ──
 pywin32>=306 ; sys_platform == "win32"   # integração COM / Win32 API
 
 # ── Notas de instalação ─────────────────────────────────────
 # Após instalar as dependências, rode UMA VEZ:
-#   playwright install msedge
-# para baixar o binário do Microsoft Edge gerenciado pelo Playwright.
+#   playwright install chromium
+# para baixar o binário do Chromium gerenciado pelo Playwright.
 #
-# pyautogui e Pillow devem ser instalados no Windows (destino de execução).
-# No Linux eles instalam mas não funcionarão (dependem de display Windows).
+# No Windows, o Chrome deve estar instalado em:
+#   C:\Program Files\Google\Chrome\Application\chrome.exe
+# ou defina a variável de ambiente CHROME_EXECUTABLE_PATH com o caminho correto.
+#
+# No Linux, instale o Google Chrome:
+#   wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#   sudo dpkg -i google-chrome-stable_current_amd64.deb

@@ -109,8 +109,34 @@ NOMES_DISPLAY: dict[str, str] = {
 # Configurações
 # ---------------------------------------------------------------------------
 URL_ECAC = "https://cav.receita.fazenda.gov.br/autenticacao/login"
-DEFAULT_CHROME_PATH = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 REMOTE_DEBUGGING_PORT = int(os.getenv("REMOTE_DEBUGGING_PORT", "9222"))
+
+def _detectar_chrome_path() -> str:
+    """Detecta o caminho do Chrome automaticamente por plataforma."""
+    import sys
+    if "CHROME_EXECUTABLE_PATH" in os.environ:
+        return os.environ["CHROME_EXECUTABLE_PATH"]
+    if sys.platform == "win32":
+        candidatos = [
+            r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+            r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe",
+            os.path.expandvars(r"%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"),
+        ]
+    else:
+        candidatos = [
+            "/usr/bin/google-chrome",
+            "/usr/bin/google-chrome-stable",
+            "/usr/bin/chromium-browser",
+            "/usr/bin/chromium",
+            "/snap/bin/chromium",
+        ]
+    for c in candidatos:
+        if os.path.isfile(c):
+            return c
+    # Retorna o padrão Windows como fallback (erro descritivo ao tentar abrir)
+    return r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+DEFAULT_CHROME_PATH = _detectar_chrome_path()
 
 CAPTCHA_API_URL = os.getenv(
     "CAPTCHA_API_URL",
