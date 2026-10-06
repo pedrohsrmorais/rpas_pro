@@ -1,0 +1,22 @@
+# ============================================================
+# Requirements — RPAs eCAC Unificados
+# Python 3.10+  |  Windows 10/11
+# ============================================================
+
+# ── Automação de interface (PyAutoGUI) ──────────────────────
+pyautogui>=0.9.54           # cliques, digitação, reconhecimento de imagem
+Pillow>=10.4.0              # dependência do PyAutoGUI (screenshots / imagens)
+
+# ── Automação de navegador (Playwright via CDP) ─────────────
+playwright>=1.45.1          # controla Edge/Chrome via CDP
+
+# ── Utilitários Windows (ignorado automaticamente no Linux) ──
+pywin32>=306 ; sys_platform == "win32"   # integração COM / Win32 API
+
+# ── Notas de instalação ─────────────────────────────────────
+# Após instalar as dependências, rode UMA VEZ:
+#   playwright install msedge
+# para baixar o binário do Microsoft Edge gerenciado pelo Playwright.
+#
+# pyautogui e Pillow devem ser instalados no Windows (destino de execução).
+# No Linux eles instalam mas não funcionarão (dependem de display Windows).
